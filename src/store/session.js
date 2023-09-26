@@ -3,7 +3,7 @@ const sessionUser = {
   id: 1,
   email: "demo@user.com",
   username: "demouser",
-  
+
 };
 
 
@@ -20,23 +20,32 @@ const removeUser = () => ({
   type: REMOVE_USER,
 });
 
+
+
 const initialState = { user: null };
 
 // Thunks
-export const authenticate = () => async (dispatch) => {
-  // send get request to the backend
-  const response = await fetch("/api/auth/", {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  // if the response is ok, dispatch the action creator
-  if (response.ok) {
-    const data = await response.json();
-    if (data.errors) {
-      return;
-    }
-
+export const login = (data) => async (dispatch) => {
     dispatch(setUser(data));
+}
+
+export const logout = () => async (dispatch) => {
+    dispatch(removeUser());
+}
+
+// Reducer
+const sessionReducer = (state = initialState, action) => {
+  let newState = { ...state };
+  switch (action.type) {
+    case SET_USER:
+      newState.user = action.payload;
+      return newState;
+    case REMOVE_USER:
+      newState.user = null;
+      return newState;
+    default:
+      return state;
   }
 }
+
+export default sessionReducer;

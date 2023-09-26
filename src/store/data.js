@@ -1,19 +1,21 @@
 // Seed data
-const data = {
+const seed_data = {
   users: {
     1: {
       id: 1,
       email: "demo@user.com",
       username: "demouser",
       first_name: "Demo",
-      last_name: "User"
+      last_name: "User",
+      password: "password"
     },
     2: {
       id: 2,
       email: "ned@user.com",
       username: "neduser",
       first_name: "Ned",
-      last_name: "User"
+      last_name: "User",
+      password: "password"
     }
   },
   produdcts: {
@@ -65,22 +67,45 @@ export const addData = (data) => {
 // --------------Thunk Creators----------------
 // Load all data
 export const thunkLoadData = () => {
-  const response = data;
+  const response = seed_data;
+  return loadData(response);
+}
 
-  const data = response.json();
+export const signup = (id, email, username, first_name, last_name, password) => async (dispatch) => {
+  // send post request to the backend
+  const response = {
+    id,
+    email,
+    username,
+    first_name,
+    last_name,
+    password
+  };
+  if (response) {
+    dispatch(addData(response));
+    return response;
+  } else {
+    return ["An error occurred. Please try again."];
+  }
 }
 
 // --------------Initial State----------------
-const initialState = { data: null };
+const initialState = {
+  seed_data
+};
 
 // --------------Reducer----------------
 const dataReducer = (state = initialState, action) => {
+  let newState = { ...state };
   switch (action.type) {
     case LOAD_DATA:
       return { data: action.payload };
     case ADD_DATA:
-      return { data: action.payload };
+      newState.users = {...state.users, [action.payload.id]: action.payload};
+      return newState;
     default:
       return state;
   }
-}
+};
+
+export default dataReducer;
