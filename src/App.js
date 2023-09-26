@@ -1,10 +1,6 @@
-import logo from './logo.svg';
-import './App.css';
-
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { authenticate } from './store/session';
 import Navigation from './components/Navigation';
 
 function App() {
@@ -16,14 +12,15 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
+      <Navigation/>
         <Switch>
           <Route path="/login" >
             <LoginFormPage />
           </Route>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
         </Switch>
-      )}
     </>
   );
 }
