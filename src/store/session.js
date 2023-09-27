@@ -17,6 +17,10 @@ export const login = (user) => async (dispatch) => {
   dispatch(setUser(user));
 };
 
+export const logout = () => async (dispatch) => {
+  dispatch(removeUser());
+};
+
 // Reducer
 const sessionReducer = (state = initialState, action) => {
   switch (action.type) {

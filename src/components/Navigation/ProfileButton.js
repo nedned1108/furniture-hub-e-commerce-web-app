@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginModal from "../LoginModal";
 import { Link } from "react-router-dom";
+import { logout } from "../../store/session";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -36,8 +37,9 @@ function ProfileButton({ user }) {
     closeMenu();
   }
 
-  const logout = (e) => {
+  const logoutButton = async (e) => {
     e.preventDefault();
+    dispatch(logout());
     closeMenu();
   }
 
@@ -55,7 +57,7 @@ function ProfileButton({ user }) {
               <Link onClick={closeMenu} className="" to="/profile">Profile</Link>
             </li>
             <li>
-              <button onClick={logout} className="noU" to="/spots/current">Log Out</button>
+              <button onClick={logoutButton} className="noU" to="/spots/current">Log Out</button>
             </li>
           </ul>
         ) : (
