@@ -47,7 +47,7 @@ function ProfileButton({ user }) {
           <Link onClick={closeMenu} className="" to="/profile">Profile</Link>
         </div>
         <div>
-          <button onClick={logout} className="noU" to="/spots/current">Current Spots</button>
+          <button onClick={logout} className="noU" to="/spots/current">Log Out</button>
         </div>
       </ul>
     </div>
