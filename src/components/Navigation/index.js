@@ -5,10 +5,10 @@ import ProfileButton from "./ProfileButton";
 function Navigation() {
   return (
     <ul className="flex justify-between">
-      <NavLink to="/" exact>
+      <NavLink to="/" exact className="ml-5">
         Home
       </NavLink>
-      <ProfileButton />
+      <ProfileButton className="mr-5"/>
     </ul>
   )
 
