@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 
 function LoginModal () {
   const dispatch = useDispatch();
@@ -13,11 +14,6 @@ function LoginModal () {
   const handleSubmit = async (e) => {
       e.preventDefault();
       if (users[email] && users[email].password === password) {
-      if (data) {
-        setErrors(data);
-      } else {
-          closeModal()
-      }
     }
   }
 
@@ -56,12 +52,12 @@ function LoginModal () {
           >
             Log In
           </button>
-          <OpenModalButton
+          <OpenModalMenuItem
             className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg w-3/4 h-10 mb-2 p-2"
             modalName="signup"
           >
             Sign Up
-          </OpenModalButton>
+          </OpenModalMenuItem>
         </form>
       </div>
     </>

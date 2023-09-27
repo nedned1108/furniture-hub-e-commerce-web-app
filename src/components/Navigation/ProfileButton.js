@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import OpenModalMenuItem from "./OpenModalMenuItem";
+import LoginModal from "../LoginModal";
 import { Link } from "react-router-dom";
 
 function ProfileButton({ user }) {
@@ -8,6 +9,7 @@ function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
   const currentUser = useSelector(state => state.session.user);
+  console.log(showMenu)
 
   const openMenu = () => {
     if (showMenu) return;
@@ -30,35 +32,46 @@ function ProfileButton({ user }) {
 
   const closeMenu = () => setShowMenu(false);
 
+  const login = (e) => {
+    e.preventDefault();
+    closeMenu();
+  }
+
   const logout = (e) => {
     e.preventDefault();
     closeMenu();
   }
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-  
   return (
     <div className="mr-5">
       <button onClick={openMenu} className="menu-button">
         <i className="fas fa-solid fa-bars"></i>
       </button>
-      <ul className={`${ulClassName}`} ref={ulRef}>
+      <div className={`absolute flex flex-col items-start z-10 border-2 border-color-indigo-500 rounded-md p-2 text-md text-color-indigo-500 bg-white mx-0, 
+        ${showMenu ? '' : 'hidden'}`} ref={ulRef}
+      >
         {currentUser ? (
-          <>
-            <div>
+          <ul>
+            <li>
               <Link onClick={closeMenu} className="" to="/profile">Profile</Link>
-            </div>
-            <div>
+            </li>
+            <li>
               <button onClick={logout} className="noU" to="/spots/current">Log Out</button>
-            </div>
-          </>
-          ) : (
-            <div>
-              <button onClick={closeMenu} className="noU" to="/login">Log In</button>
-            </div>
-          )
-          }
-      </ul>
+            </li>
+          </ul>
+        ) : (
+          <ul>
+            <li className="cursor-pointer">
+              <OpenModalMenuItem
+                itemText="Log In"
+                onItemClick={closeMenu}
+                modalComponent={<LoginModal />}
+              />
+            </li>
+          </ul>
+        )
+        }
+      </div>
     </div>
   );
 }
