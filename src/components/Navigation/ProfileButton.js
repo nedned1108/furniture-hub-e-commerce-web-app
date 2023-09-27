@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import { Link } from "react-router-dom";
 
@@ -7,6 +7,7 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const currentUser = useSelector(state => state.session.user);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -42,12 +43,21 @@ function ProfileButton({ user }) {
         <i className="fas fa-solid fa-bars"></i>
       </button>
       <ul className={`${ulClassName}`} ref={ulRef}>
-        <div>
-          <Link onClick={closeMenu} className="" to="/profile">Profile</Link>
-        </div>
-        <div>
-          <button onClick={logout} className="noU" to="/spots/current">Log Out</button>
-        </div>
+        {currentUser ? (
+          <>
+            <div>
+              <Link onClick={closeMenu} className="" to="/profile">Profile</Link>
+            </div>
+            <div>
+              <button onClick={logout} className="noU" to="/spots/current">Log Out</button>
+            </div>
+          </>
+          ) : (
+            <div>
+              <button onClick={closeMenu} className="noU" to="/login">Log In</button>
+            </div>
+          )
+          }
       </ul>
     </div>
   );
