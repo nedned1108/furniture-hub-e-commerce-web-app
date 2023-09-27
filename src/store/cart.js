@@ -1,9 +1,15 @@
 // constants
+const LOAD_CART = "cart/LOAD_CART";
 const ADD_TO_CART = "cart/ADD_TO_CART";
 const REMOVE_FROM_CART = "cart/REMOVE_FROM_CART";
 const UPDATE_CART = "cart/UPDATE_CART";
 
 // action creators
+const loadCart = (cart) => ({
+  type: LOAD_CART,
+  payload: cart,
+});
+
 const addToCart = (product) => ({
   type: ADD_TO_CART,
   payload: product,
@@ -20,6 +26,10 @@ const updateCart = (product) => ({
 });
 
 // thunks
+export const loadCartThunk = () => async (dispatch) => {
+  dispatch(loadCart());
+}
+
 export const addToCartThunk = (product) => async (dispatch) => {
   dispatch(addToCart(product));
 }
@@ -38,6 +48,9 @@ const initialState = { products: [] };
 const cartReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
+    case LOAD_CART:
+      newState = { ...state };
+      newState.products = action.payload;
     case ADD_TO_CART:
       newState = { ...state };
       newState.products.push(action.payload);
