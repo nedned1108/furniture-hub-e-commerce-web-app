@@ -45,8 +45,8 @@ function ProfileButton({ user }) {
 
   return (
     <div className="mr-5">
-      <button onClick={openMenu} className="menu-button">
-        <i className="fas fa-solid fa-bars"></i>
+      <button onClick={openMenu} className="menu-button justify-center items-center">
+        <i className="fas fa-solid fa-bars text-lg"></i>
       </button>
       <div className={`absolute flex flex-col items-start z-10 border-2 border-color-indigo-500 rounded-md p-2 text-md text-color-indigo-500 bg-white mx-0, 
         ${showMenu ? '' : 'hidden'}`} ref={ulRef}
