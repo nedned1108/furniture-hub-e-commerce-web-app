@@ -2,20 +2,27 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import { login } from "../../store/session";
 
 function LoginModal () {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
-  const users = useSelector(state => state.users);
-  console.log(users)
+  const { closeModal } = useModal(); 
+  const users = useSelector(state => state.data.data.users);
 
   const handleSubmit = async (e) => {
       e.preventDefault();
-      if (users[email] && users[email].password === password) {
+      users.forEach(user => {
+        if (user.email === email && user.password === password) {
+          dispatch(login(user))
+          closeModal()
+        } else {
+          setErrors(['Invalid credentials'])
+        }
+      })
     }
-  }
 
   return (
     <>
