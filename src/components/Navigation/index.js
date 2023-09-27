@@ -9,9 +9,9 @@ function Navigation() {
         TECHHUB
       </NavLink>
       <div className="flex gap-x-2">
-        <button>
-          <i className="fa-solid fa-cart-shopping flex items-center"></i>
-        </button>
+        <NavLink to="/cart" className="cursor-pointer flex items-center">
+          <i className="fa-solid fa-cart-shopping"></i>
+        </NavLink>
         <ProfileButton/>
       </div>
     </ul>

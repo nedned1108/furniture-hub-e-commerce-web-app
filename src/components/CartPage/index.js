@@ -5,6 +5,7 @@ import { loadCartThunk, addToCartThunk, removeFromCartThunk, updateCartThunk } f
 function CartPage() {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart.products);
+  console.log(cart);
 
   useEffect(() => {
     dispatch(loadCartThunk());
@@ -20,6 +21,10 @@ function CartPage() {
   
   const handleUpdateCart = (product) => {
     dispatch(updateCartThunk(product));
+  }
+
+  if (cart == null) {
+    return
   }
 
   return (

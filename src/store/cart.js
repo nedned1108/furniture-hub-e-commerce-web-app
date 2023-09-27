@@ -5,9 +5,8 @@ const REMOVE_FROM_CART = "cart/REMOVE_FROM_CART";
 const UPDATE_CART = "cart/UPDATE_CART";
 
 // action creators
-const loadCart = (cart) => ({
+const loadCart = () => ({
   type: LOAD_CART,
-  payload: cart,
 });
 
 const addToCart = (product) => ({
@@ -46,11 +45,10 @@ export const updateCartThunk = (product) => async (dispatch) => {
 const initialState = { products: [] };
 
 const cartReducer = (state = initialState, action) => {
-  let newState;
+  let newState = { ...state };
   switch (action.type) {
     case LOAD_CART:
-      newState = { ...state };
-      newState.products = action.payload;
+      return newState;
     case ADD_TO_CART:
       newState = { ...state };
       newState.products.push(action.payload);
