@@ -2,25 +2,34 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkLoadData } from '../../store/data'
 import { addToCartThunk } from '../../store/cart'
+import { updateCartThunk } from '../../store/cart'
 
 const HomePage = () => {
   const dispatch = useDispatch()
   const data = useSelector(state => state.data.data);
+  const cart = useSelector(state => state.cart.products);
+  console.log(cart)
 
   useEffect(() => {
     dispatch(thunkLoadData());
   }, [dispatch]);
 
   const handleAddToCart = (item) => {
-    const product = {
-      id: item.id,
-      name: item.name,
-      price: item.price,
-      description: item.description,
-      image: item.image_url,
-      quantity: 1
+    const found = cart.find(product => product.id === item.id);
+    if (found) {
+      found.quantity += 1;
+      dispatch(updateCartThunk(found));
+      return;
+    } else {
+      const product = {
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        image: item.image_url,
+        quantity: 1
+      }
+      dispatch(addToCartThunk(product));
     }
-    dispatch(addToCartThunk(product));
   }
   return (
     <div className='mt-10 ml-5'>
