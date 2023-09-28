@@ -49,10 +49,10 @@ function CartPage() {
           ) : (
             <div className="flex flex-col">
               {cart.map(product => (
-                <div key={product.id} className="flex justify-between mb-5 px-5 pt-5 pb-5 h-[20vh] w-[70vw] border-2 border-gray-300">
+                <div key={product.id} className="flex justify-between mb-5 px-5 pt-5 pb-5 h-[13vh] w-[70vw] border-2 border-gray-300">
                   <div className='w-[1/3] h-20 mr-6 flex'>
-                    <img src={product.image} alt={product.name} className="object-fill" />
-                    <div className="mr-5">
+                    <img src={product.image} alt={product.name} className="w-20 h-20 object-fill mr-10" />
+                    <div className="mr-5 w-[30vw]">
                       <h2 className="text-xl font-bold">{product.name}</h2>
                       <p className="text-lg">${product.price}</p>
                     </div>
@@ -72,7 +72,7 @@ function CartPage() {
                     </button>
                   </div>
                   <div>
-                    <h2 className="font-bold text-lg">${product.price * product.quantity}</h2>
+                    <h2 className="font-bold text-lg">${(product.price * product.quantity).toFixed(2)}</h2>
                   </div>
                 </div>
               ))}
@@ -82,7 +82,7 @@ function CartPage() {
             ""
           ) : (
             <div className="border-gray-300 border-2 px-5 h-[10vh]">
-              <p className="text-xl font-bold">Subtotal: ${subtotal}</p>
+              <p className="text-xl font-bold">Subtotal: ${subtotal.toFixed(2)}</p>
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-10 w-full">
                 Checkout
               </button>

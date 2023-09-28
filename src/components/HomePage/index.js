@@ -32,13 +32,13 @@ const HomePage = () => {
     }
   }
   return (
-    <div className='mt-10 ml-5'>
+    <div className='mt-10 ml-[10vw] mr-[10vw]'>
       {data && data.products.map((item) => 
-        <div key={item.id} className='flex mb-5 w-[80vw]'>
-          <div className='w-40 h-30 mr-6'>
-            <img className='object-fill' src={item.image_url} alt={item.name} />
+        <div key={item.id} className='flex mb-5 pb-3 w-[70vw] justify-around border-b-2 border-gray-300'>
+          <div className='w-40 h-30'>
+            <img className='w-[6vw] h-[10vh] object-fill' src={item.image_url} alt={item.name} />
           </div>
-          <div>
+          <div className='w-[60vw]'>
             <h1 className='text-xl'>{item.name}</h1>
             <h3 className='text-xl font-bold'>${item.price}</h3>
             <h2>{item.description}</h2>
