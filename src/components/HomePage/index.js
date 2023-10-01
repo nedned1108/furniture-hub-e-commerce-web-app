@@ -8,7 +8,7 @@ const HomePage = () => {
   const dispatch = useDispatch()
   const data = useSelector(state => state.data.data);
   const cart = useSelector(state => state.cart.products);
-  console.log(cart)
+  const currentUser = useSelector(state => state.session.user);
 
   useEffect(() => {
     dispatch(thunkLoadData());
@@ -43,12 +43,14 @@ const HomePage = () => {
             <h3 className='text-xl font-bold'>${item.price}</h3>
             <h2>{item.description}</h2>
           </div>
-          <button  
-            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-10'
-            onClick={() => handleAddToCart(item)}
-          >
-            <i className="fa-solid fa-cart-shopping"></i>
-          </button>
+          {currentUser && 
+            <button  
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-10'
+              onClick={() => handleAddToCart(item)}
+            >
+              <i className="fa-solid fa-cart-shopping"></i>
+            </button>
+          }
         </div>
       )}
     </div>
