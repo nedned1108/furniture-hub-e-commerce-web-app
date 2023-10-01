@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { thunkLoadData } from "../../store/data";
 import { loadCartThunk, addToCartThunk, removeFromCartThunk, updateCartThunk } from "../../store/cart";
 
 function CartPage() {
   const dispatch = useDispatch();
-  const cart = useSelector(state => state.cart.products);
+  const carts = useSelector(state => state.cart.products);
+  const currentUser = useSelector(state => state.session.user);
+  const cart = carts.filter(product => product.user_id === currentUser.id);
   const subtotal = cart.reduce((acc, product) => acc + product.price * product.quantity, 0);
 
   useEffect(() => {
     dispatch(loadCartThunk());
+    dispatch(thunkLoadData());
   }, [dispatch]);
 
   const handleAddToCart = (product) => {

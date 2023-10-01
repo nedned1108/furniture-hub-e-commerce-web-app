@@ -11,7 +11,7 @@ function LoginModal () {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal(); 
-  const users = useSelector(state => state.data.data.users);
+  const users = useSelector(state => state.data.users);
 
   const handleSubmit = async (e) => {
       e.preventDefault();

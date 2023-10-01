@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginModal from "../LoginModal";
 import SignupModal from "../SignupModal";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { logout } from "../../store/session";
 
-function ProfileButton({ user }) {
+function ProfileButton() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
   const currentUser = useSelector(state => state.session.user);
@@ -33,15 +34,11 @@ function ProfileButton({ user }) {
 
   const closeMenu = () => setShowMenu(false);
 
-  const login = (e) => {
-    e.preventDefault();
-    closeMenu();
-  }
-
   const logoutButton = async (e) => {
     e.preventDefault();
     dispatch(logout());
     closeMenu();
+    history.push('/');
   }
 
   return (

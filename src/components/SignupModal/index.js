@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signup } from "../../store/data";
+import { login } from "../../store/session";
 
 function SignupModal () {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ function SignupModal () {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
-  const users = useSelector(state => state.data.data.users);
+  const users = useSelector(state => state.data.users);
 
   const { closeModal } = useModal();
 
@@ -25,11 +26,23 @@ function SignupModal () {
         setErrors(['Username already exists'])
       } else if (password !== confirmPassword) {
         setErrors(['Passwords must match'])
-      } else {
-        dispatch(signup(username, email, first_name, last_name, password))
-        closeModal()
       }
     })
+
+    if (errors.length === 0) {
+      const id = users.length + 1;
+      const user = {
+        id: id,
+        email: email,
+        username: username,
+        first_name: first_name,
+        last_name: last_name,
+        password: password
+      }
+      dispatch(signup(user))
+      closeModal()
+      dispatch(login(email, password))
+    }
   }
 
   return (

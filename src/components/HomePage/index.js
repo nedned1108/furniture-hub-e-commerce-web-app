@@ -6,7 +6,7 @@ import { updateCartThunk } from '../../store/cart'
 
 const HomePage = () => {
   const dispatch = useDispatch()
-  const data = useSelector(state => state.data.data);
+  const data = useSelector(state => state.data);
   const cart = useSelector(state => state.cart.products);
   const currentUser = useSelector(state => state.session.user);
 
@@ -26,7 +26,8 @@ const HomePage = () => {
         name: item.name,
         price: item.price,
         image: item.image_url,
-        quantity: 1
+        quantity: 1,
+        user_id: currentUser.id
       }
       dispatch(addToCartThunk(product));
     }
