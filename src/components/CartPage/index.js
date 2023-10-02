@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkLoadData } from "../../store/data";
 import { loadCartThunk, addToCartThunk, removeFromCartThunk, updateCartThunk } from "../../store/cart";
-import { addToReceiptThunk } from "../../store/receipt";
-import { useModal } from "../../context/Modal";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import ConfirmationModal from "../ConfirmationModal";
 
@@ -47,22 +45,6 @@ function CartPage() {
       dispatch(updateCartThunk(product));
     }
   }
-
-  // const handleCheckout = () => {
-  //   if (cart.length === 0) {
-  //     return;
-  //   }
-
-  //   const receipt = {
-  //     user_id: currentUser.id,
-  //     products: cart,
-  //     subtotal: subtotal,
-  //   }
-    
-  //   dispatch(addToReceiptThunk(receipt));
-  //   cart.forEach(product => dispatch(removeFromCartThunk(product.id)));
-  // }
-
 
   if (cart == null) {
     return
