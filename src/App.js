@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import HomePage from './components/HomePage';
 import CartPage from './components/CartPage';
+import ReceiptPage from './components/ReceiptPage';
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
         </Route>
         <Route path="/cart" exact>
           <CartPage />
+        </Route>
+        <Route path="/receipt" exact>
+          <ReceiptPage />
         </Route>
       </Switch>
     </>
