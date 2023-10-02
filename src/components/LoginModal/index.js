@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import { login } from "../../store/session";
+import SignupModal from "../SignupModal";
 
 function LoginModal () {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ function LoginModal () {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal(); 
-  const users = useSelector(state => state.data.data.users);
+  const users = useSelector(state => state.data.users);
 
   const handleSubmit = async (e) => {
       e.preventDefault();
@@ -60,11 +61,10 @@ function LoginModal () {
             Log In
           </button>
           <OpenModalMenuItem
-            className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg w-3/4 h-10 mb-2 p-2"
-            modalName="signup"
-          >
-            Sign Up
-          </OpenModalMenuItem>
+            className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg w-3/4 h-10 mb-2 p-2 list-none flex justify-center cursor-pointer"
+            itemText="Sign Up"
+            modalComponent={<SignupModal />}
+          />
         </form>
       </div>
     </>

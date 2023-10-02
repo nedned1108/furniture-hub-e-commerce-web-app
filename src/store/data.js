@@ -175,19 +175,12 @@ export const thunkLoadData = () => {
   return loadData(response);
 }
 
-export const signup = (id, email, username, first_name, last_name, password) => async (dispatch) => {
+export const signup = (user) => async (dispatch) => {
   // send post request to the backend
-  const response = {
-    id,
-    email,
-    username,
-    first_name,
-    last_name,
-    password
-  };
-  if (response) {
-    dispatch(addData(response));
-    return response;
+
+  if (user) {
+    dispatch(addData(user));
+    return user;
   } else {
     return ["An error occurred. Please try again."];
   }
@@ -195,7 +188,7 @@ export const signup = (id, email, username, first_name, last_name, password) => 
 
 // --------------Initial State----------------
 const initialState = {
-  seed_data
+  ...seed_data
 };
 
 // --------------Reducer----------------
@@ -203,9 +196,9 @@ const dataReducer = (state = initialState, action) => {
   let newState = { ...state };
   switch (action.type) {
     case LOAD_DATA:
-      return { data: action.payload };
+      return newState;
     case ADD_DATA:
-      newState.users = {...state.users, [action.payload.id]: action.payload};
+      newState.users = [...state.users, action.payload];
       return newState;
     default:
       return state;

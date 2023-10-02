@@ -6,9 +6,9 @@ import { updateCartThunk } from '../../store/cart'
 
 const HomePage = () => {
   const dispatch = useDispatch()
-  const data = useSelector(state => state.data.data);
+  const data = useSelector(state => state.data);
   const cart = useSelector(state => state.cart.products);
-  console.log(cart)
+  const currentUser = useSelector(state => state.session.user);
 
   useEffect(() => {
     dispatch(thunkLoadData());
@@ -26,7 +26,8 @@ const HomePage = () => {
         name: item.name,
         price: item.price,
         image: item.image_url,
-        quantity: 1
+        quantity: 1,
+        user_id: currentUser.id
       }
       dispatch(addToCartThunk(product));
     }
@@ -43,12 +44,14 @@ const HomePage = () => {
             <h3 className='text-xl font-bold'>${item.price}</h3>
             <h2>{item.description}</h2>
           </div>
-          <button  
-            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-10'
-            onClick={() => handleAddToCart(item)}
-          >
-            <i className="fa-solid fa-cart-shopping"></i>
-          </button>
+          {currentUser && 
+            <button  
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-10'
+              onClick={() => handleAddToCart(item)}
+            >
+              <i className="fa-solid fa-cart-shopping"></i>
+            </button>
+          }
         </div>
       )}
     </div>

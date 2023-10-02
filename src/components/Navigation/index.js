@@ -4,12 +4,12 @@ import ProfileButton from "./ProfileButton";
 
 function Navigation() {
   return (
-    <ul className="flex justify-between bg-gradient-to-r h-8 from-purple-500 to-pink-500">
-      <NavLink to="/" exact className="ml-5 text-lg font-bold">
+    <ul className="flex justify-between bg-gradient-to-r h-10 from-purple-500 to-pink-500">
+      <NavLink to="/" exact className="flex ml-10 text-xl font-bold items-center">
         TECHHUB
       </NavLink>
-      <div className="flex gap-x-2">
-        <NavLink to="/cart" className="cursor-pointer flex items-center">
+      <div className="flex items-center gap-x-4">
+        <NavLink to="/cart" className="cursor-pointer flex items-center text-xl">
           <i className="fa-solid fa-cart-shopping"></i>
         </NavLink>
         <ProfileButton/>
