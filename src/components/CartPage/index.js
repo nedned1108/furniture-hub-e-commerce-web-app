@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { thunkLoadData } from "../../store/data";
 import { loadCartThunk, addToCartThunk, removeFromCartThunk, updateCartThunk } from "../../store/cart";
 import { addToReceiptThunk } from "../../store/receipt";
+import { useModal } from "../../context/Modal";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import ConfirmationModal from "../ConfirmationModal";
 
 function CartPage() {
   const dispatch = useDispatch();
@@ -10,6 +13,11 @@ function CartPage() {
   const currentUser = useSelector(state => state.session.user);
   const cart = carts.filter(product => product.user_id === currentUser.id);
   const subtotal = cart.reduce((acc, product) => acc + product.price * product.quantity, 0);
+  const receipt = {
+    user_id: currentUser.id,
+    products: cart,
+    subtotal: subtotal,
+  }
 
   useEffect(() => {
     dispatch(loadCartThunk());
@@ -40,20 +48,20 @@ function CartPage() {
     }
   }
 
-  const handleCheckout = () => {
-    if (cart.length === 0) {
-      return;
-    }
+  // const handleCheckout = () => {
+  //   if (cart.length === 0) {
+  //     return;
+  //   }
 
-    const receipt = {
-      user_id: currentUser.id,
-      products: cart,
-      subtotal: subtotal,
-    }
-
-    dispatch(addToReceiptThunk(receipt));
-    cart.forEach(product => dispatch(removeFromCartThunk(product.id)));
-  }
+  //   const receipt = {
+  //     user_id: currentUser.id,
+  //     products: cart,
+  //     subtotal: subtotal,
+  //   }
+    
+  //   dispatch(addToReceiptThunk(receipt));
+  //   cart.forEach(product => dispatch(removeFromCartThunk(product.id)));
+  // }
 
 
   if (cart == null) {
@@ -104,12 +112,11 @@ function CartPage() {
           ) : (
             <div className="border-gray-300 border-2 px-5 h-[10vh]">
               <p className="text-xl font-bold">Subtotal: ${subtotal.toFixed(2)}</p>
-              <button
-                onClick={handleCheckout}    
+              <OpenModalMenuItem
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-10 w-full"
-              >
-                Checkout
-              </button>
+                itemText={"Checkout"}
+                modalComponent={<ConfirmationModal receipt={receipt} />}
+              />
             </div>
           )}
         </div>
