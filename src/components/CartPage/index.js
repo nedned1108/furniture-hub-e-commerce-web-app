@@ -15,7 +15,7 @@ function CartPage() {
   const receipt = {
     user_id: currentUser.id,
     products: cart,
-    subtotal: subtotal,
+    subtotal: (subtotal > 2000) ? (subtotal - subtotal * 0.1) : subtotal,
     confirmationNum: Math.floor(Math.random() * 1000000000),
     date: today.toDateString()
   }
@@ -96,7 +96,16 @@ function CartPage() {
             ""
           ) : (
             <div className="border-gray-300 border-2 px-5 h-[10vh]">
-              <p className="text-xl font-bold">Subtotal: ${subtotal.toFixed(2)}</p>
+              {
+                subtotal > 2000 ? (
+                  <>
+                    <p className="text-xl font-bold">Discount: 10%</p>
+                    <p className="text-xl font-bold">Subtotal: ${(subtotal - subtotal * 0.1).toFixed(2)}</p>
+                  </>
+                ) : (
+                    <p className="text-xl font-bold">Subtotal: ${subtotal.toFixed(2)}</p>
+                )
+              }
               <OpenModalMenuItem
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-10 w-full list-none flex justify-center"
                 itemText={"Checkout"}

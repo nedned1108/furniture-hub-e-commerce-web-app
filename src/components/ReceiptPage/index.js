@@ -39,7 +39,16 @@ function ReceiptPage() {
                   </div>
                 </div>
                 ))}
-                <p className="text-xl font-bold">Subtotal: ${receipt.subtotal}</p>
+                {
+                  receipt.subtotal > 2000 ? (
+                    <>
+                      <p className="text-xl">Discount: 10%</p>
+                      <p className="text-xl font-bold">Subtotal: ${(receipt.subtotal - receipt.subtotal * 0.1).toFixed(2)}</p>
+                    </>
+                  ) : (
+                      <p className="text-xl font-bold">Subtotal: ${receipt.subtotal.toFixed(2)}</p>
+                  )
+                }
               </div>
             </div>
           ))}
