@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkLoadData } from "../../store/data";
 import { loadCartThunk, addToCartThunk, removeFromCartThunk, updateCartThunk } from "../../store/cart";
+import { addToReceiptThunk } from "../../store/receipt";
 
 function CartPage() {
   const dispatch = useDispatch();
@@ -38,6 +39,22 @@ function CartPage() {
       dispatch(updateCartThunk(product));
     }
   }
+
+  const handleCheckout = () => {
+    if (cart.length === 0) {
+      return;
+    }
+
+    const receipt = {
+      user_id: currentUser.id,
+      products: cart,
+      subtotal: subtotal,
+    }
+
+    dispatch(addToReceiptThunk(receipt));
+    cart.forEach(product => dispatch(removeFromCartThunk(product.id)));
+  }
+
 
   if (cart == null) {
     return
@@ -87,7 +104,10 @@ function CartPage() {
           ) : (
             <div className="border-gray-300 border-2 px-5 h-[10vh]">
               <p className="text-xl font-bold">Subtotal: ${subtotal.toFixed(2)}</p>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-10 w-full">
+              <button
+                onClick={handleCheckout}    
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-10 w-full"
+              >
                 Checkout
               </button>
             </div>
